@@ -2,10 +2,10 @@
 
 class Frame
   def initialize(frame_result_point)
-    @frame_result_points = frame_result_point.sum
+    @frame_total = frame_result_point.sum
   end
 
-  def frame_result_points
-    @frame_result_points
+  def frame_total
+    @frame_total
   end
 end
