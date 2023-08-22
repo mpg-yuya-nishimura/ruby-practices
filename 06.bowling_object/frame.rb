@@ -1,9 +1,9 @@
 class Frame
-  def initialize(frames_score_points)
-    @frames_score_points = frames_score_points
+  def initialize(frame_result_point)
+    @frame_result_points = frame_result_point.sum
   end
 
-  def frames_score_points
-    @frames_score_points
+  def frame_result_points
+    @frame_result_points
   end
 end
