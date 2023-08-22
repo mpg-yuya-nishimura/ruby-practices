@@ -47,7 +47,7 @@ frames_score_points.each_with_index do |frame_scores, i|
 end
 
 frames = frame_result_points.map { |frame_result_point| Frame.new(frame_result_point) }
-result_frames_scores = frames.map { |frame| frame.frame_result_points }
+result_frames_scores = frames.map(&:frame_result_points)
 
 game = Game.new(result_frames_scores)
 game.show_total_score

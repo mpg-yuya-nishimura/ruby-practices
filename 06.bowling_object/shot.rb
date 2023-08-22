@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Shot
   def initialize(score)
     @score = parse_shot_result(score)

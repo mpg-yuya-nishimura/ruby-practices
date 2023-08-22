@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Game
   def initialize(frame_result_points)
     @total_score = frame_result_points.sum
