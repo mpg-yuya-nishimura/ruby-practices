@@ -3,9 +3,9 @@
 # frozen_string_literal: true
 
 require 'debug'
-require './shot.rb'
-require './frame.rb'
-require './game.rb'
+require './shot'
+require './frame'
+require './game'
 
 STRIKE_SCORE = 10
 TOTAL_GAME_COUNT = 10
