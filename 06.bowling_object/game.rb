@@ -12,7 +12,7 @@ class Game
   def initialize(argv)
     shots = create_shots(argv)
     frames = create_frames(shots)
-    result_frames = calculate_frame_results(frames)
+    result_frames = calc_frame_results(frames)
     @total_score = calc_total_score(result_frames)
   end
 
@@ -40,15 +40,15 @@ class Game
     frames_score_points
   end
 
-  def calculate_frame_results(frames_score_points)
+  def calc_frame_results(frames_score_points)
     frame_result_points = []
 
     frames_score_points.each_with_index do |frame_scores, i|
       frame_result_points << case frame_scores.length
                              when 1
-                               calculate_single_frame(frame_scores, frames_score_points[i + 1], frames_score_points[i + 2])
+                               calc_single_frame(frame_scores, frames_score_points[i + 1], frames_score_points[i + 2])
                              when 2
-                               calculate_double_frame(frame_scores, frames_score_points[i + 1])
+                               calc_double_frame(frame_scores, frames_score_points[i + 1])
                              else
                                frame_scores
                              end
@@ -57,13 +57,13 @@ class Game
     frame_result_points.map { |frame_result_point| Frame.new(frame_result_point) }
   end
 
-  def calculate_single_frame(current_frame, next_frame, frame_after_next)
+  def calc_single_frame(current_frame, next_frame, frame_after_next)
     return current_frame + next_frame&.first(2) unless next_frame && frame_after_next && next_frame.size == 1
 
     current_frame + [next_frame[0]] + [frame_after_next[0]]
   end
 
-  def calculate_double_frame(current_frame, next_frame)
+  def calc_double_frame(current_frame, next_frame)
     return current_frame + [next_frame[0]] if current_frame.sum == STRIKE_SCORE
 
     current_frame
