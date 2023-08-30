@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class Frame
-  def initialize(frame_result_point)
-    @frame_total = frame_result_point.sum
-  end
+  attr_reader :frame_total
 
-  def frame_total
-    @frame_total
+  def initialize(result_points)
+    @result_points = result_points
+    @frame_total = result_points.sum
   end
 end
