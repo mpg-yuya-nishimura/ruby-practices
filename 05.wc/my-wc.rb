@@ -18,15 +18,19 @@ opt.on('-w') { |v| options[:w] = v }
 opt.on('-c') { |v| options[:c] = v }
 opt.parse!(ARGV)
 
-if ARGV.empty?
+if ARGV.empty? && $stdin.tty?
   puts 'ファイルの指定がありません。'
+  exit
 end
 
 unless file_exist?(ARGV)
   puts '指定のファイルは存在しません'
+  exit
 end
 
-integrated_count_results = ARGV.map do |filename|
+filenames = ARGV.empty? ? $stdin.read.split(/\n+/) : ARGV
+
+integrated_count_results = filenames.map do |filename|
   line_count = 0
   word_count = 0
   byte_count = 0
@@ -57,7 +61,7 @@ integrated_count_results.each do |integrated_count_result|
   puts "#{count_result_text} #{integrated_count_result[3]}"
 end
 
-if ARGV.size > 1
+if filenames.size > 1
   total_stats_text = ''
   total_stats_text += total_stats[0].to_s.rjust(8) if options[:l] || options.empty?
   total_stats_text += total_stats[1].to_s.rjust(8) if options[:w] || options.empty?
@@ -65,4 +69,3 @@ if ARGV.size > 1
 
   puts "#{total_stats_text} total"
 end
-
