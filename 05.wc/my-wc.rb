@@ -42,11 +42,23 @@ integrated_count_results = ARGV.map do |filename|
   [line_count, word_count, byte_count, filename]
 end
 
+total_stats = [0, 0, 0]
+
 integrated_count_results.each do |integrated_count_result|
   count_result_text = ''
   count_result_text += integrated_count_result[0].to_s.rjust(8) if options[:l] || options.empty?
   count_result_text += integrated_count_result[1].to_s.rjust(8) if options[:w] || options.empty?
   count_result_text += integrated_count_result[2].to_s.rjust(8) if options[:c] || options.empty?
 
+  total_stats[0] += integrated_count_result[0]
+  total_stats[1] += integrated_count_result[1]
+  total_stats[2] += integrated_count_result[2]
+
   puts "#{count_result_text} #{integrated_count_result[3]}"
 end
+
+if ARGV.size > 1
+  total_count_result_text = total_stats.map { |total_stat| total_stat.to_s.rjust(8) }.join
+  puts "#{total_count_result_text} total"
+end
+
