@@ -58,7 +58,11 @@ integrated_count_results.each do |integrated_count_result|
 end
 
 if ARGV.size > 1
-  total_count_result_text = total_stats.map { |total_stat| total_stat.to_s.rjust(8) }.join
-  puts "#{total_count_result_text} total"
+  total_stats_text = ''
+  total_stats_text += total_stats[0].to_s.rjust(8) if options[:l] || options.empty?
+  total_stats_text += total_stats[1].to_s.rjust(8) if options[:w] || options.empty?
+  total_stats_text += total_stats[2].to_s.rjust(8) if options[:c] || options.empty?
+
+  puts "#{total_stats_text} total"
 end
 
