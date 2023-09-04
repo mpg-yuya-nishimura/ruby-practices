@@ -35,7 +35,7 @@ integrated_count_results = filenames.map do |filename|
   word_count = 0
   byte_count = 0
 
-  file = File.open(filename, "r")
+  file = File.open(filename, 'r')
 
   file.each_line do |line|
     line_count += 1
