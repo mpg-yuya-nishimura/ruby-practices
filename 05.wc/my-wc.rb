@@ -28,16 +28,17 @@ unless file_exist?(ARGV)
   exit
 end
 
-filenames = ARGV.empty? ? $stdin.read.split(/\n+/) : ARGV
+stdin_data = $stdin.read
+filenames = ARGV.empty? ? [stdin_data] : ARGV
 
 integrated_count_results = filenames.map do |filename|
   line_count = 0
   word_count = 0
   byte_count = 0
 
-  file = File.open(filename, 'r')
+  text = ARGV.empty? ? stdin_data : File.open(filename, 'r')
 
-  file.each_line do |line|
+  text.each_line do |line|
     line_count += 1
     word_count += line.split(/\s+/).size
     byte_count += line.bytesize
@@ -58,10 +59,11 @@ integrated_count_results.each do |integrated_count_result|
   total_stats[1] += integrated_count_result[1]
   total_stats[2] += integrated_count_result[2]
 
-  puts "#{count_result_text} #{integrated_count_result[3]}"
+  total_result_text = integrated_count_result[3] unless ARGV.empty?
+  puts "#{count_result_text} #{total_result_text}"
 end
 
-if filenames.size > 1
+if ARGV.size > 1
   total_stats_text = ''
   total_stats_text += total_stats[0].to_s.rjust(8) if options[:l] || options.empty?
   total_stats_text += total_stats[1].to_s.rjust(8) if options[:w] || options.empty?
