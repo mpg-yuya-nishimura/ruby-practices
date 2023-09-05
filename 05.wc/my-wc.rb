@@ -14,6 +14,7 @@ def create_result_text(stats, options)
   text += stats[0].to_s.rjust(8) if options[:l] || options.empty?
   text += stats[1].to_s.rjust(8) if options[:w] || options.empty?
   text += stats[2].to_s.rjust(8) if options[:c] || options.empty?
+  text
 end
 
 opt = OptionParser.new
@@ -60,4 +61,5 @@ ARGF.each do |line|
   total_stats[2] += line.bytesize
 end
 
-puts "#{create_result_text(total_stats, options)} total" unless original_argv.size == 1
+total_text = original_argv.size > 1 ? 'total' : nil
+puts "#{create_result_text(total_stats, options)} #{total_text}" unless original_argv.size == 1
