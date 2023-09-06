@@ -11,8 +11,8 @@ class Game
 
   def initialize(argv)
     shots = create_shots(argv)
-    frames = create_frames(shots)
-    result_frames = Frame.calc_frame_results(frames)
+    game_scores = create_game_scores(shots)
+    result_frames = Frame.calc_frame_results(game_scores)
     @total_score = calc_total_score(result_frames)
   end
 
@@ -22,7 +22,7 @@ class Game
     argv.split(',').map { |score| Shot.new(score) }
   end
 
-  def create_frames(shots)
+  def create_game_scores(shots)
     frames_score_points = []
     tmp_scores = []
     shots.each do |shot|
