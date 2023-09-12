@@ -48,22 +48,20 @@ ARGF.each do |line|
   total_stats[:word_count] += line.split.size
   total_stats[:byte_count] += line.bytesize
 
-  if ARGF.eof?
-    file_metadata[:name] = ARGF.filename if original_argv.size > 0
-    file_stats << file_metadata
-    file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
+  next unless ARGF.eof?
 
-    ARGF.close
-    ARGF.skip
+  file_metadata[:name] = ARGF.filename if original_argv.size.positive?
+  file_stats << file_metadata
+  file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
 
-    break if ARGF.argv.empty?
-  end
+  ARGF.close
+  ARGF.skip
+
+  break if ARGF.argv.empty?
 end
 
 file_stats.each do |file_stat|
   puts "#{create_result_text(file_stat, options)} #{file_stat[:name]}"
 end
 
-if original_argv.size > 1
-  puts "#{create_result_text(total_stats, options)} total"
-end
+puts "#{create_result_text(total_stats, options)} total" if original_argv.size > 1
