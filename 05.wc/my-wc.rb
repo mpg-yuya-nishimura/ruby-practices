@@ -3,7 +3,6 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require 'etc'
 
 def file_exist?(filenames)
   filenames.all? { |filename| File.exist?(filename) }
