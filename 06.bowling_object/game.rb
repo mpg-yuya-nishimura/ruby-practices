@@ -25,6 +25,8 @@ class Game
         frame.result_score = calc_single_frame(frame, frames[i + 1], frames[i + 2])
       when 2
         frame.result_score = calc_double_frame(frame, frames[i + 1])
+      when 3
+        frame.result_score = calc_double_frame(frame, frames[i + 1])
       else
         frame.result_score = frame
       end
@@ -42,7 +44,7 @@ class Game
         tmp_scores = []
       else
         tmp_scores << shot
-        if tmp_scores.size == 2
+        if (tmp_scores.size == 2 && frames_score_points.size != TOTAL_GAME_COUNT - 1) || (tmp_scores.size == 3)
           created_new_frames << Frame.new(tmp_scores)
           frames_score_points << tmp_scores
           tmp_scores = [] unless frames_score_points.size == TOTAL_GAME_COUNT
