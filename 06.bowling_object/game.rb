@@ -35,22 +35,21 @@ class Game
 
   def create_frames(shots)
     frames_score_points = []
-    created_new_frames = []
     tmp_scores = []
     shots.split(',').each do |shot|
       if tmp_scores.empty? && shot == 'X' && frames_score_points.size < TOTAL_GAME_COUNT - 1
-        created_new_frames << Frame.new([shot])
         frames_score_points << [shot]
         tmp_scores = []
       else
         tmp_scores << shot
-        if (tmp_scores.size == 2 && frames_score_points.size != TOTAL_GAME_COUNT - 1) || (tmp_scores.size == 3)
-          created_new_frames << Frame.new(tmp_scores)
+        if tmp_scores.size == 2
           frames_score_points << tmp_scores
           tmp_scores = [] unless frames_score_points.size == TOTAL_GAME_COUNT
         end
       end
     end
+
+    created_new_frames = frames_score_points.map { |frames_score_point| Frame.new(frames_score_point) }
     created_new_frames
   end
 
