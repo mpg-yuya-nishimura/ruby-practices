@@ -54,7 +54,7 @@ ARGF.each do |line|
   file_stats << file_metadata
   file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
 
-  ARGF.skip
+  ARGF.close
 
   break if ARGF.argv.empty?
 end
