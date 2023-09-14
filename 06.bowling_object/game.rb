@@ -20,20 +20,24 @@ class Game
     frames = create_frames(shots)
 
     frames.each_with_index do |frame, i|
-      case frame.throw_count
-      when 1
-        frame.result_score = calc_single_frame(frame, frames[i + 1], frames[i + 2])
-      when 2
-        frame.result_score = calc_double_frame(frame, frames[i + 1])
-      when 3
-        frame.result_score = calc_double_frame(frame, frames[i + 1])
-      else
-        frame.result_score = frame
-      end
+      frame.result_score = case frame.throw_count
+                           when 1
+                             calc_single_frame(frame, frames[i + 1], frames[i + 2])
+                           when 2
+                             calc_double_frame(frame, frames[i + 1])
+                           when 3
+                             calc_double_frame(frame, frames[i + 1])
+                           else
+                             frame
+                           end
     end
   end
 
   def create_frames(shots)
+    separate_frames(shots).map { |frames_score_point| Frame.new(frames_score_point) }
+  end
+
+  def separate_frames(shots)
     frames_score_points = []
     tmp_scores = []
     shots.split(',').each do |shot|
@@ -49,8 +53,7 @@ class Game
       end
     end
 
-    created_new_frames = frames_score_points.map { |frames_score_point| Frame.new(frames_score_point) }
-    created_new_frames
+    frames_score_points
   end
 
   def calc_single_frame(current_frame, next_frame, frame_after_next)
