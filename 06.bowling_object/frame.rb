@@ -14,12 +14,12 @@ class Frame
   end
 
   def calc_result_score(frames, frame_number)
-    @result_score = case self.throw_count
-    when 1
-      calc_single_frame(self, frames[frame_number + 1], frames[frame_number + 2])
-    when 2, 3
-      calc_multiple_frame(self, frames[frame_number + 1])
-    end
+    @result_score = case throw_count
+                    when 1
+                      calc_single_frame(self, frames[frame_number + 1], frames[frame_number + 2])
+                    when 2, 3
+                      calc_multiple_frame(self, frames[frame_number + 1])
+                    end
   end
 
   private
