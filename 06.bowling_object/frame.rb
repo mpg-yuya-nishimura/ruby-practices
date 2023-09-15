@@ -18,9 +18,7 @@ class Frame
     when 1
       calc_single_frame(self, frames[i + 1], frames[i + 2])
     when 2, 3
-      calc_double_frame(self, frames[i + 1])
-    else
-      self
+      calc_multiple_frame(self, frames[i + 1])
     end
   end
 
@@ -32,7 +30,7 @@ class Frame
     current_frame.score + next_frame.first_shot.score + frame_after_next.first_shot.score
   end
 
-  def calc_double_frame(current_frame, next_frame)
+  def calc_multiple_frame(current_frame, next_frame)
     return current_frame.score + next_frame.first_shot.score if current_frame.score == STRIKE_SCORE && next_frame
 
     current_frame.score
