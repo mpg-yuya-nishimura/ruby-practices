@@ -20,16 +20,7 @@ class Game
     frames = create_frames(shots)
 
     frames.each_with_index do |frame, i|
-      frame.result_score = case frame.throw_count
-                           when 1
-                             calc_single_frame(frame, frames[i + 1], frames[i + 2])
-                           when 2
-                             calc_double_frame(frame, frames[i + 1])
-                           when 3
-                             calc_double_frame(frame, frames[i + 1])
-                           else
-                             frame
-                           end
+      frame.calc_result_score(frames, i)
     end
   end
 
@@ -54,18 +45,6 @@ class Game
     end
 
     frames_score_points
-  end
-
-  def calc_single_frame(current_frame, next_frame, frame_after_next)
-    return current_frame.score + next_frame.first_shot.score + next_frame.second_shot.score unless next_frame && frame_after_next && next_frame.throw_count == 1
-
-    current_frame.score + next_frame.first_shot.score + frame_after_next.first_shot.score
-  end
-
-  def calc_double_frame(current_frame, next_frame)
-    return current_frame.score + next_frame.first_shot.score if current_frame.score == STRIKE_SCORE && next_frame
-
-    current_frame.score
   end
 
   def calc_total_score(frames)
