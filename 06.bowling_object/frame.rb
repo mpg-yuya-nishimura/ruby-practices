@@ -17,9 +17,7 @@ class Frame
     @result_score = case self.throw_count
     when 1
       calc_single_frame(self, frames[i + 1], frames[i + 2])
-    when 2
-      calc_double_frame(self, frames[i + 1])
-    when 3
+    when 2, 3
       calc_double_frame(self, frames[i + 1])
     else
       self
