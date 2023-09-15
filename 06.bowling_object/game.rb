@@ -33,30 +33,28 @@ class Game
     tmp_scores = []
 
     shots.split(',').each do |shot|
-      if tmp_scores.empty?
-        add_single_shot_score(shot, frames_score_points, tmp_scores)
-      else
-        add_multiple_shot_scores(shot, frames_score_points, tmp_scores)
-      end
+      frames_score_points, tmp_scores = add_scores_to_frame(frames_score_points, tmp_scores, shot)
     end
 
     frames_score_points
   end
 
-  def add_single_shot_score(shot, frames_score_points, tmp_scores)
-    if shot == 'X' && frames_score_points.size < TOTAL_GAME_COUNT - 1
-      frames_score_points << [shot]
+  def add_scores_to_frame(frames_score_points, tmp_scores, shot)
+    if tmp_scores.empty?
+      if shot == 'X' && frames_score_points.size < TOTAL_GAME_COUNT - 1
+        frames_score_points << [shot]
+      else
+        tmp_scores << shot
+      end
     else
       tmp_scores << shot
+      if tmp_scores.size == 2
+        frames_score_points << tmp_scores
+        tmp_scores = [] unless frames_score_points.size == TOTAL_GAME_COUNT
+      end
     end
-  end
 
-  def add_multiple_shot_scores(shot, frames_score_points, tmp_scores)
-    tmp_scores << shot
-    if tmp_scores.size == 2
-      frames_score_points << tmp_scores
-      tmp_scores = [] unless frames_score_points.size == TOTAL_GAME_COUNT
-    end
+    [frames_score_points, tmp_scores]
   end
 
   def calc_total_score(frames)
