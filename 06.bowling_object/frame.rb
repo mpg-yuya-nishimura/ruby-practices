@@ -3,23 +3,21 @@
 require './shot'
 
 class Frame
-  attr_reader :first_shot, :second_shot, :third_shot, :throw_count, :score, :result_score
+  attr_reader :first_shot, :second_shot, :third_shot, :score, :result_score
 
   def initialize(shots)
     @first_shot = Shot.new(shots[0])
     @second_shot = Shot.new(shots[1])
     @third_shot = Shot.new(shots[2])
-    @throw_count = shots.size
     @score = total_score
   end
 
   def calc_result_score(next_frame, after_next_frame)
-    @result_score = case throw_count
-                    when 1
-                      calc_single_frame(next_frame, after_next_frame)
-                    when 2, 3
-                      calc_multiple_frame(next_frame)
-                    end
+    @result_score = if first_shot.score == 10 && next_frame
+      calc_single_frame(next_frame, after_next_frame)
+    else
+      calc_multiple_frame(next_frame)
+    end
   end
 
   private
