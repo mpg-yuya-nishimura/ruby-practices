@@ -3,7 +3,6 @@
 require './shot'
 require './frame'
 
-STRIKE_SCORE = 10
 TOTAL_GAME_COUNT = 10
 
 class Game

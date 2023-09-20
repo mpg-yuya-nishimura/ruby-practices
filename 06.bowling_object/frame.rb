@@ -2,6 +2,8 @@
 
 require './shot'
 
+STRIKE_SCORE = 10
+
 class Frame
   attr_reader :first_shot, :second_shot, :third_shot, :score, :result_score
 
@@ -13,17 +15,21 @@ class Frame
   end
 
   def calc_result_score(next_frame, after_next_frame)
-    @result_score = if first_shot.score == 10 && next_frame
+    @result_score = if strike? && next_frame
       calc_single_frame(next_frame, after_next_frame)
     else
       calc_multiple_frame(next_frame)
     end
   end
 
+  def strike?
+    first_shot.score == STRIKE_SCORE
+  end
+
   private
 
   def calc_single_frame(next_frame, after_next_frame)
-    return score + next_frame.first_shot.score + next_frame.second_shot.score unless after_next_frame && next_frame.first_shot.score == 10
+    return score + next_frame.first_shot.score + next_frame.second_shot.score unless after_next_frame && next_frame.strike?
 
     score + next_frame.first_shot.score + after_next_frame.first_shot.score
   end
