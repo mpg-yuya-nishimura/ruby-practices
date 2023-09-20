@@ -19,7 +19,7 @@ class Game
     frames = create_frames(shots)
 
     frames.each_with_index do |frame, i|
-      frame.calc_result_score(frames[i + 1], frames[i + 2])
+      frame.result_score(frames[i + 1], frames[i + 2])
     end
   end
 
@@ -57,6 +57,6 @@ class Game
   end
 
   def calc_total_score(frames)
-    frames.sum(&:result_score)
+    frames.sum(&:score)
   end
 end

@@ -5,7 +5,7 @@ require './shot'
 STRIKE_SCORE = 10
 
 class Frame
-  attr_reader :first_shot, :second_shot, :third_shot, :score, :result_score
+  attr_reader :first_shot, :second_shot, :third_shot, :score
 
   def initialize(shots)
     @first_shot = Shot.new(shots[0])
@@ -14,8 +14,8 @@ class Frame
     @score = total_score
   end
 
-  def calc_result_score(next_frame, after_next_frame)
-    @result_score = if strike? && next_frame
+  def result_score(next_frame, after_next_frame)
+    @score = if strike? && next_frame
       calc_single_frame(next_frame, after_next_frame)
     else
       calc_multiple_frame(next_frame)
