@@ -13,27 +13,27 @@ class Frame
     @score = total_score
   end
 
-  def calc_result_score(frames, frame_number)
+  def calc_result_score(next_frame, after_next_frame)
     @result_score = case throw_count
                     when 1
-                      calc_single_frame(self, frames[frame_number + 1], frames[frame_number + 2])
+                      calc_single_frame(next_frame, after_next_frame)
                     when 2, 3
-                      calc_multiple_frame(self, frames[frame_number + 1])
+                      calc_multiple_frame(next_frame)
                     end
   end
 
   private
 
-  def calc_single_frame(current_frame, next_frame, frame_after_next)
-    return current_frame.score + next_frame.first_shot.score + next_frame.second_shot.score unless next_frame && frame_after_next && next_frame.throw_count == 1
+  def calc_single_frame(next_frame, after_next_frame)
+    return score + next_frame.first_shot.score + next_frame.second_shot.score unless next_frame && after_next_frame && next_frame.first_shot.score == 10
 
-    current_frame.score + next_frame.first_shot.score + frame_after_next.first_shot.score
+    score + next_frame.first_shot.score + after_next_frame.first_shot.score
   end
 
-  def calc_multiple_frame(current_frame, next_frame)
-    return current_frame.score + next_frame.first_shot.score if current_frame.score == STRIKE_SCORE && next_frame
+  def calc_multiple_frame(next_frame)
+    return score + next_frame.first_shot.score if score == STRIKE_SCORE && next_frame
 
-    current_frame.score
+    score
   end
 
   def total_score

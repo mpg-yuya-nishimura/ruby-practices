@@ -20,7 +20,7 @@ class Game
     frames = create_frames(shots)
 
     frames.each_with_index do |frame, i|
-      frame.calc_result_score(frames, i)
+      frame.calc_result_score(frames[i + 1], frames[i + 2])
     end
   end
 
