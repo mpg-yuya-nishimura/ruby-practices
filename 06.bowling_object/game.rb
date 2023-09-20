@@ -39,8 +39,12 @@ class Game
   end
 
   def add_scores_to_frame(frames_score_points, tmp_scores, shot)
-    if tmp_scores.empty? && shot == 'X' && frames_score_points.size < TOTAL_GAME_COUNT - 1
-      frames_score_points << [shot]
+    if tmp_scores.empty?
+      if shot == 'X' && frames_score_points.size < TOTAL_GAME_COUNT - 1
+        frames_score_points << [shot]
+      else
+        tmp_scores << shot
+      end
     else
       tmp_scores << shot
       if tmp_scores.size == 2
