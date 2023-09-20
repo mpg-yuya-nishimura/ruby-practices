@@ -32,28 +32,18 @@ class Game
     tmp_scores = []
 
     shots.split(',').each do |shot|
-      frames_score_points, tmp_scores = add_scores_to_frame(frames_score_points, tmp_scores, shot)
+      tmp_scores << shot
+      if frames_score_points.size < TOTAL_GAME_COUNT
+        if tmp_scores.size >= 2 || shot == 'X'
+          frames_score_points << tmp_scores.dup
+          tmp_scores.clear
+        end
+      else
+        frames_score_points.last << shot
+      end
     end
 
     frames_score_points
-  end
-
-  def add_scores_to_frame(frames_score_points, tmp_scores, shot)
-    if tmp_scores.empty?
-      if shot == 'X' && frames_score_points.size < TOTAL_GAME_COUNT - 1
-        frames_score_points << [shot]
-      else
-        tmp_scores << shot
-      end
-    else
-      tmp_scores << shot
-      if tmp_scores.size == 2
-        frames_score_points << tmp_scores
-        tmp_scores = [] unless frames_score_points.size == TOTAL_GAME_COUNT
-      end
-    end
-
-    [frames_score_points, tmp_scores]
   end
 
   def calc_total_score(frames)
