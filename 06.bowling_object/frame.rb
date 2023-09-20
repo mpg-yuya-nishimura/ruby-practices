@@ -16,10 +16,10 @@ class Frame
 
   def result_score(next_frame, after_next_frame)
     @score = if strike? && next_frame
-      calc_single_frame(next_frame, after_next_frame)
-    else
-      calc_multiple_frame(next_frame)
-    end
+               calc_single_frame(next_frame, after_next_frame)
+             else
+               calc_multiple_frame(next_frame)
+             end
   end
 
   def strike?
