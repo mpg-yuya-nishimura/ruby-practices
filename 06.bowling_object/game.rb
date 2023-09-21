@@ -33,13 +33,11 @@ class Game
 
     shots.split(',').each do |shot|
       tmp_scores << shot
-      if frames_score_points.size < TOTAL_GAME_COUNT
-        if tmp_scores.size >= 2 || shot == 'X'
-          frames_score_points << tmp_scores.dup
-          tmp_scores.clear
-        end
-      else
+      if frames_score_points.size >= TOTAL_GAME_COUNT
         frames_score_points.last << shot
+      elsif tmp_scores.size >= 2 || shot == 'X'
+        frames_score_points << tmp_scores.dup
+        tmp_scores.clear
       end
     end
 
