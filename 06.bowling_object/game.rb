@@ -9,18 +9,20 @@ class Game
   attr_reader :total_score
 
   def initialize(shots)
-    result_frames = calc_frame_results(shots)
-    @total_score = calc_total_score(result_frames)
+    @total_score = calc_total_results(shots)
   end
 
   private
 
-  def calc_frame_results(shots)
+  def calc_total_results(shots)
     frames = create_frames(shots)
 
+    total_score = 0
     frames.each_with_index do |frame, i|
-      frame.result_score(frames[i + 1], frames[i + 2])
+      total_score += frame.result_score(frames[i + 1], frames[i + 2])
     end
+
+    total_score
   end
 
   def create_frames(shots)
@@ -42,9 +44,5 @@ class Game
     end
 
     frames_score_points
-  end
-
-  def calc_total_score(frames)
-    frames.sum(&:score)
   end
 end
