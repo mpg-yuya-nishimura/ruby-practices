@@ -16,13 +16,13 @@ class Frame
   end
 
   def result_score(next_frame, after_next_frame)
-    @score = if strike? && next_frame
-               calc_strike_frame(next_frame, after_next_frame)
-             elsif spare? && next_frame
-               calc_spare_frame(next_frame)
-             else
-               score
-             end
+    if strike? && next_frame
+      calc_strike_frame(next_frame, after_next_frame)
+    elsif spare? && next_frame
+      calc_spare_frame(next_frame)
+    else
+      score
+    end
   end
 
   def spare?
