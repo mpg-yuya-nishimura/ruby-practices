@@ -37,7 +37,7 @@ class Frame
 
   def calc_strike_frame(next_frame, after_next_frame)
     common_score = score + next_frame.first_shot.score
-    common_score + ((!after_next_frame || !next_frame.strike?) ? next_frame.second_shot : after_next_frame.first_shot).score
+    common_score + (!after_next_frame || !next_frame.strike? ? next_frame.second_shot : after_next_frame.first_shot).score
   end
 
   def calc_spare_frame(next_frame)
