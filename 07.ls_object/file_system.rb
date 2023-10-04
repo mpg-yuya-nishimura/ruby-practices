@@ -11,19 +11,19 @@ class FileSystem
     extract_options(argv)
     @filenames = fetch_filenames
     @total_blocks = @filenames.sum { |filename| File.stat(filename).blocks }
-    @column_file_groups = create_column_file_groups
+    @file_column_groups = create_file_column_groups
   end
 
   def display
     puts "total #{@total_blocks}" if @options[:l]
-    @column_file_groups.each do |column_file_group|
+    @file_column_groups.each do |column_file_group|
       puts column_file_group.text
     end
   end
 
   private
 
-  def create_column_file_groups
+  def create_file_column_groups
     if @options[:l]
       @filenames.map { |filename| SingularFileColumnGroup.new(filename) }
     else
