@@ -31,6 +31,10 @@ class FileItem
     end
   end
 
+  def create_text
+    "#{@type}#{@permissions} #{@hard_link} #{@owner}  #{@group}  #{@size} #{@last_modified_time} #{@name}"
+  end
+
   private
 
   def file_type(filename)
