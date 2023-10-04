@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require_relative 'file_item'
-require_relative 'file_column_group'
 
-class PluralFileColumnGroup < FileColumnGroup
+class PluralFileColumnGroup
+  attr_reader :text
+
   def initialize(filenames, longest_filename_length)
     files = create_file_items(filenames)
-    super(files, longest_filename_length)
+    @text = create_text(files, longest_filename_length)
   end
 
   private
