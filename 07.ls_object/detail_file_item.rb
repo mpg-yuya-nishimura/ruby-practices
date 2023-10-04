@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'file_item'
 require 'etc'
+require_relative 'file_item'
 
 class FileDetailItem < FileItem
   attr_reader :stat, :type, :permissions, :hard_link, :owner, :group, :size, :last_modified_time
