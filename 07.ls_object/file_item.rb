@@ -19,16 +19,16 @@ class FileItem
   def initialize(filename)
     @name = filename
 
-    if filename
-      @stat = File.stat(filename)
-      @type = file_type(filename)
-      @permissions = format_permissions(stat.mode)
-      @hard_link = stat.nlink
-      @owner = Etc.getpwuid(stat.uid).name
-      @group = Etc.getgrgid(stat.gid).name
-      @size = stat.size
-      @last_modified_time = stat.mtime.strftime('%b %d %H:%M')
-    end
+    return unless filename
+
+    @stat = File.stat(filename)
+    @type = file_type(filename)
+    @permissions = format_permissions(stat.mode)
+    @hard_link = stat.nlink
+    @owner = Etc.getpwuid(stat.uid).name
+    @group = Etc.getgrgid(stat.gid).name
+    @size = stat.size
+    @last_modified_time = stat.mtime.strftime('%b %d %H:%M')
   end
 
   def create_text
