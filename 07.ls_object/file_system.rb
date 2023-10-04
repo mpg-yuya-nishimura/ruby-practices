@@ -8,7 +8,10 @@ SEGMENT_LENGTH = 3
 
 class FileSystem
   def initialize(argv)
-    @column_file_groups = create_column_file_groups(argv)
+    extract_options(argv)
+    @filenames = fetch_filenames
+    @total_blocks = @filenames.sum { |filename| File.stat(filename).blocks }
+    @column_file_groups = create_column_file_groups
   end
 
   def display
@@ -20,17 +23,11 @@ class FileSystem
 
   private
 
-  def create_column_file_groups(argv)
-    extract_options(argv)
-
-    filenames = fetch_filenames
-
-    @total_blocks = filenames.sum { |filename| File.stat(filename).blocks }
-
+  def create_column_file_groups
     if @options[:l]
-      filenames.map { |filename| SingularFileColumnGroup.new(filename) }
+      @filenames.map { |filename| SingularFileColumnGroup.new(filename) }
     else
-      divided_filenames = divide_into_segments(filenames)
+      divided_filenames = divide_into_segments(@filenames)
       longest_filename_length = divided_filenames.flatten.max_by(&:length).length
       transpose(divided_filenames).map { |transposed_filename| PluralFileColumnGroup.new(transposed_filename, longest_filename_length) }
     end
