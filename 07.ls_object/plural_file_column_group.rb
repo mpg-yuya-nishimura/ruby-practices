@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require './file_item'
-require './file_column_group'
+require_relative 'file_item'
+require_relative 'file_column_group'
 
 class PluralFileColumnGroup < FileColumnGroup
   def initialize(filenames, longest_filename_length)

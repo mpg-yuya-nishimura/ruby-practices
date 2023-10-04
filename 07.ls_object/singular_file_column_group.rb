@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require './detail_file_item'
-require './file_column_group'
+require_relative 'detail_file_item'
+require_relative 'file_column_group'
 
 class SingularFileColumnGroup < FileColumnGroup
   def initialize(filename)

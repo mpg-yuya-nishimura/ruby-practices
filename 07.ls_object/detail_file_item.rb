@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './file_item'
+require_relative 'file_item'
 require 'etc'
 
 class FileDetailItem < FileItem

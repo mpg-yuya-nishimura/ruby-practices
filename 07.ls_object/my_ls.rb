@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-require './file_system'
+require_relative 'file_system'
 require 'debug'
 
 file_system = FileSystem.new(ARGV)
