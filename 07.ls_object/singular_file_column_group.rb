@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'detail_file_item'
+require_relative 'file_item'
 require_relative 'file_column_group'
 
 class SingularFileColumnGroup < FileColumnGroup
@@ -12,7 +12,7 @@ class SingularFileColumnGroup < FileColumnGroup
   private
 
   def create_file_item(filename)
-    FileDetailItem.new(filename)
+    FileItem.new(filename)
   end
 
   def create_text(file, _)
