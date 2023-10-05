@@ -3,7 +3,7 @@
 require 'etc'
 
 class FileItem
-  attr_reader :name, :stat, :type, :permissions, :hard_link, :owner, :group, :size, :last_modified_time
+  attr_reader :name
 
   PERMISSION_MAP = {
     '0' => '---',
@@ -23,12 +23,12 @@ class FileItem
 
     @stat = File.stat(filename)
     @type = file_type(filename)
-    @permissions = format_permissions(stat.mode)
-    @hard_link = stat.nlink
-    @owner = Etc.getpwuid(stat.uid).name
-    @group = Etc.getgrgid(stat.gid).name
-    @size = stat.size
-    @last_modified_time = stat.mtime.strftime('%b %d %H:%M')
+    @permissions = format_permissions(@stat.mode)
+    @hard_link = @stat.nlink
+    @owner = Etc.getpwuid(@stat.uid).name
+    @group = Etc.getgrgid(@stat.gid).name
+    @size = @stat.size
+    @last_modified_time = @stat.mtime.strftime('%b %d %H:%M')
   end
 
   def create_text
