@@ -27,9 +27,8 @@ class FileSystem
     if @options[:l]
       @filenames.map { |filename| SingularFileColumnGroup.new(filename) }
     else
-      divided_filenames = divide_into_segments(@filenames)
-      longest_filename_length = divided_filenames.flatten.max_by(&:length).length
-      transpose(divided_filenames).map { |transposed_filename| PluralFileColumnGroup.new(transposed_filename, longest_filename_length) }
+      longest_filename_length = divide_into_segments.flatten.max_by(&:length).length
+      transpose(divide_into_segments).map { |transposed_filename| PluralFileColumnGroup.new(transposed_filename, longest_filename_length) }
     end
   end
 
@@ -49,8 +48,8 @@ class FileSystem
     filenames
   end
 
-  def divide_into_segments(filenames)
-    filenames.each_slice((filenames.length + 2) / SEGMENT_LENGTH).to_a
+  def divide_into_segments
+    @filenames.each_slice((@filenames.length + 2) / SEGMENT_LENGTH).to_a
   end
 
   def transpose(filenames)
