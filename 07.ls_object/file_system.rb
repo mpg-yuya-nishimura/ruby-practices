@@ -50,9 +50,10 @@ class FileSystem
 
   def sort_dot_files(files)
     files.sort_by do |file|
-      case file
-      when /^\./ then [0, file]
-      else [1, file]
+      if /^\./.match?(file)
+        [0, file]
+      else
+        [1, file]
       end
     end
   end
