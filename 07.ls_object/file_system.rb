@@ -43,19 +43,9 @@ class FileSystem
 
   def fetch_filenames
     filenames = Dir.glob('*')
-    filenames = sort_dot_files(Dir.entries('.')) if @options[:a]
+    filenames = Dir.entries('.').sort if @options[:a]
     filenames.reverse! if @options[:r]
     filenames
-  end
-
-  def sort_dot_files(files)
-    files.sort_by do |file|
-      if /^\./.match?(file)
-        [0, file]
-      else
-        [1, file]
-      end
-    end
   end
 
   def divide_into_segments
