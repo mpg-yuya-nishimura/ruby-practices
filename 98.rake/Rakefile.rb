@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 task :compile_c do
   c_filename = 'hello'
 
