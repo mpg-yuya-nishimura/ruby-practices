@@ -34,4 +34,8 @@ class FileStatsAnalyzer
       exit
     end
   end
+
+  def all_files_exist?
+    @original_argv.all? { |filename| File.exist?(filename) }
+  end
 end
