@@ -5,6 +5,7 @@ require 'optparse'
 class FilesStatsAnalyzer
   def initialize
     extract_options
+    @original_argv = ARGV.dup
   end
 
   def display
