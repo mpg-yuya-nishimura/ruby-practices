@@ -21,9 +21,9 @@ class FileStatsAnalyzer
   def extract_options
     opt = OptionParser.new
     @options = {}
-    opt.on('-a') { |v| @options[:a] = v }
-    opt.on('-r') { |v| @options[:r] = v }
     opt.on('-l') { |v| @options[:l] = v }
+    opt.on('-w') { |v| @options[:w] = v }
+    opt.on('-c') { |v| @options[:c] = v }
     opt.parse!(ARGV)
   end
 
