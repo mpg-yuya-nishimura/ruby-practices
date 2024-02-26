@@ -11,6 +11,9 @@ class FileStatsAnalyzer
   end
 
   def display
+    calc_file_stats_results.each do |file|
+      puts file.text
+    end
   end
 
   private
