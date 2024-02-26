@@ -53,10 +53,14 @@ class FileStatsAnalyzer
       file_metadata[:word_count] += line.split.size
       file_metadata[:byte_count] += line.bytesize
 
+      total_stats[:line_count] += 1
+      total_stats[:word_count] += line.split.size
+      total_stats[:byte_count] += line.bytesize
+
       next unless ARGF.eof?
 
       file_metadata[:name] = ARGF.filename if @original_argv.size.positive?
-      file_result_stats << FileCountResult.new(file_metadata, @options)
+      file_result_stats << file_metadata
       file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
 
       ARGF.close
@@ -64,6 +68,7 @@ class FileStatsAnalyzer
       break if ARGF.argv.empty?
     end
 
-    file_result_stats
+    file_result_stats << total_stats if @original_argv.size > 1
+    file_result_stats = file_result_stats.map { |file_result_stat| FileCountResult.new(file_result_stat, @options) }
   end
 end

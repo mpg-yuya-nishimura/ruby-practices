@@ -4,7 +4,7 @@ class FileCountResult
   attr_reader :text
 
   def initialize(file, options)
-    @file_name = file[:name]
+    @file_name = file[:name] || 'total'
     @line_count = file[:line_count].to_s
     @word_count = file[:word_count].to_s
     @byte_count = file[:byte_count].to_s
