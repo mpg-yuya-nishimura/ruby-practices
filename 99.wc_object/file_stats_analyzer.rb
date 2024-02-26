@@ -33,10 +33,10 @@ class FileStatsAnalyzer
       exit
     end
 
-    unless all_files_exist?
-      puts '指定のファイルは存在しません'
-      exit
-    end
+    return if all_files_exist?
+
+    puts '指定のファイルは存在しません'
+    exit
   end
 
   def all_files_exist?
