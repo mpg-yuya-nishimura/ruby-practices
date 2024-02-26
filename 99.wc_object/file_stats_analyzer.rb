@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
+require_relative 'file_count_result'
 
 class FileStatsAnalyzer
   def initialize
