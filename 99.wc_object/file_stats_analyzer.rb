@@ -39,4 +39,28 @@ class FileStatsAnalyzer
   def all_files_exist?
     @original_argv.all? { |filename| File.exist?(filename) }
   end
+
+  def calc_file_stats_results
+    file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
+    total_stats = { line_count: 0, word_count: 0, byte_count: 0 }
+    file_result_stats = []
+
+    ARGF.each do |line|
+      file_metadata[:line_count] += 1
+      file_metadata[:word_count] += line.split.size
+      file_metadata[:byte_count] += line.bytesize
+
+      next unless ARGF.eof?
+
+      file_metadata[:name] = ARGF.filename if @original_argv.size.positive?
+      file_result_stats << FileCountResult.new(file_metadata, @options)
+      file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
+
+      ARGF.close
+
+      break if ARGF.argv.empty?
+    end
+
+    file_result_stats
+  end
 end
