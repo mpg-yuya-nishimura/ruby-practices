@@ -2,6 +2,6 @@
 
 # frozen_string_literal: true
 
-require_relative 'wc'
+require_relative 'lib_wc'
 
 Wc.new(ARGV, ARGF).display
