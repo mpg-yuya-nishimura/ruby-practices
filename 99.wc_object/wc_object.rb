@@ -4,5 +4,4 @@
 
 require_relative 'wc'
 
-file_stats_analyzer = Wc.new(ARGV, ARGF)
-file_stats_analyzer.display
+Wc.new(ARGV, ARGF).display
