@@ -17,7 +17,7 @@ class FileStatsAnalyzer
     end
 
     calc_file_stats_results.each do |file|
-      puts file.text
+      puts file
     end
   end
 
@@ -61,6 +61,15 @@ class FileStatsAnalyzer
     end
 
     file_result_stats << total_stats if @filenames.size > 1
-    file_result_stats = file_result_stats.map { |file_result_stat| FileCountResult.new(file_result_stat, @options) }
+    file_result_stats = file_result_stats.map { |file_result_stat| create_result_text(file_result_stat) }
+  end
+
+  def create_result_text(file)
+    text = ''
+    text += file[:line_count].to_s.rjust(8) if @options[:l] || @options.empty?
+    text += file[:word_count].to_s.rjust(8) if @options[:w] || @options.empty?
+    text += file[:byte_count].to_s.rjust(8) if @options[:c] || @options.empty?
+    file_name = file[:name] || 'total'
+    "#{text} #{file_name}"
   end
 end
