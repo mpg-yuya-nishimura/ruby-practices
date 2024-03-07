@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-require_relative 'file_stats_analyzer'
+require_relative 'wc'
 
-file_stats_analyzer = FileStatsAnalyzer.new(ARGV, ARGF)
+file_stats_analyzer = Wc.new(ARGV, ARGF)
 file_stats_analyzer.display
