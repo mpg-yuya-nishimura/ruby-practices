@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require_relative 'file_count_result'
 
 class FileStatsAnalyzer
-  def initialize
+  def initialize(argv, argf)
+    @argv = argv
+    @argf = argf
     @options = {}
     extract_options
-    @filenames = ARGV.dup
+    @filenames = @argv.dup
   end
 
   def display
@@ -28,7 +29,7 @@ class FileStatsAnalyzer
     opt.on('-l') { |v| @options[:l] = v }
     opt.on('-w') { |v| @options[:w] = v }
     opt.on('-c') { |v| @options[:c] = v }
-    opt.parse!(ARGV)
+    opt.parse!(@argv)
   end
 
   def all_files_exist?
@@ -40,7 +41,7 @@ class FileStatsAnalyzer
     total_stats = { line_count: 0, word_count: 0, byte_count: 0 }
     file_result_stats = []
 
-    ARGF.each do |line|
+    @argf.each do |line|
       file_metadata[:line_count] += 1
       file_metadata[:word_count] += line.split.size
       file_metadata[:byte_count] += line.bytesize
@@ -49,15 +50,15 @@ class FileStatsAnalyzer
       total_stats[:word_count] += line.split.size
       total_stats[:byte_count] += line.bytesize
 
-      next unless ARGF.eof?
+      next unless @argf.eof?
 
-      file_metadata[:name] = ARGF.filename if @filenames.size.positive?
+      file_metadata[:name] = @argf.filename if @filenames.size.positive?
       file_result_stats << file_metadata
       file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
 
-      ARGF.close
+      @argf.close
 
-      break if ARGF.argv.empty?
+      break if @argf.argv.empty?
     end
 
     file_result_stats << total_stats if @filenames.size > 1

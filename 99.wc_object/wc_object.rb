@@ -4,5 +4,5 @@
 
 require_relative 'file_stats_analyzer'
 
-file_stats_analyzer = FileStatsAnalyzer.new
+file_stats_analyzer = FileStatsAnalyzer.new(ARGV, ARGF)
 file_stats_analyzer.display
