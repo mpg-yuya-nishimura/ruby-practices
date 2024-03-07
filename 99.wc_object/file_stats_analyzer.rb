@@ -5,6 +5,7 @@ require_relative 'file_count_result'
 
 class FileStatsAnalyzer
   def initialize
+    @options = {}
     extract_options
     @original_argv = ARGV.dup
   end
@@ -24,7 +25,6 @@ class FileStatsAnalyzer
 
   def extract_options
     opt = OptionParser.new
-    @options = {}
     opt.on('-l') { |v| @options[:l] = v }
     opt.on('-w') { |v| @options[:w] = v }
     opt.on('-c') { |v| @options[:c] = v }
