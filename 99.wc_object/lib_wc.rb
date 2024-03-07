@@ -53,7 +53,6 @@ class Wc
 
       next unless @argf.eof?
 
-
       file_metadata[:name] = @argf.filename if @filenames.size.positive?
       file_result_stats << file_metadata
       file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }

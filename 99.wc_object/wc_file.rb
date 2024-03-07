@@ -2,6 +2,7 @@
 
 class WcFile
   attr_reader :result_text
+
   def initialize(options, file_result_stat)
     @options = options
     @line_count = file_result_stat[:line_count]
