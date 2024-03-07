@@ -7,10 +7,14 @@ class FileStatsAnalyzer
   def initialize
     extract_options
     @original_argv = ARGV.dup
-    validate_files_accessible
   end
 
   def display
+    unless all_files_exist?
+      puts '指定のファイルは存在しません'
+      return
+    end
+
     calc_file_stats_results.each do |file|
       puts file.text
     end
@@ -25,12 +29,6 @@ class FileStatsAnalyzer
     opt.on('-w') { |v| @options[:w] = v }
     opt.on('-c') { |v| @options[:c] = v }
     opt.parse!(ARGV)
-  end
-
-  def validate_files_accessible
-    return if all_files_exist?
-
-    puts '指定のファイルは存在しません'
   end
 
   def all_files_exist?
