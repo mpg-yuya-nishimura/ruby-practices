@@ -7,7 +7,7 @@ class FileStatsAnalyzer
   def initialize
     @options = {}
     extract_options
-    @original_argv = ARGV.dup
+    @filenames = ARGV.dup
   end
 
   def display
@@ -32,7 +32,7 @@ class FileStatsAnalyzer
   end
 
   def all_files_exist?
-    @original_argv.all? { |filename| File.exist?(filename) }
+    @filenames.all? { |filename| File.exist?(filename) }
   end
 
   def calc_file_stats_results
@@ -51,7 +51,7 @@ class FileStatsAnalyzer
 
       next unless ARGF.eof?
 
-      file_metadata[:name] = ARGF.filename if @original_argv.size.positive?
+      file_metadata[:name] = ARGF.filename if @filenames.size.positive?
       file_result_stats << file_metadata
       file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
 
@@ -60,7 +60,7 @@ class FileStatsAnalyzer
       break if ARGF.argv.empty?
     end
 
-    file_result_stats << total_stats if @original_argv.size > 1
+    file_result_stats << total_stats if @filenames.size > 1
     file_result_stats = file_result_stats.map { |file_result_stat| FileCountResult.new(file_result_stat, @options) }
   end
 end
