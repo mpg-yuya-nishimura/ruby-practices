@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
+require_relative 'wc_file'
 
 class Wc
   def initialize(argv, argf)
@@ -18,7 +19,7 @@ class Wc
     end
 
     calc_file_stats_results.each do |file|
-      puts file
+      puts file.result_text
     end
   end
 
@@ -52,6 +53,7 @@ class Wc
 
       next unless @argf.eof?
 
+
       file_metadata[:name] = @argf.filename if @filenames.size.positive?
       file_result_stats << file_metadata
       file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
@@ -62,15 +64,6 @@ class Wc
     end
 
     file_result_stats << total_stats if @filenames.size > 1
-    file_result_stats = file_result_stats.map { |file_result_stat| create_column_text(file_result_stat) }
-  end
-
-  def create_column_text(file)
-    text = ''
-    text += file[:line_count].to_s.rjust(8) if @options[:l] || @options.empty?
-    text += file[:word_count].to_s.rjust(8) if @options[:w] || @options.empty?
-    text += file[:byte_count].to_s.rjust(8) if @options[:c] || @options.empty?
-    file_name = file[:name] || 'total'
-    "#{text} #{file_name}"
+    file_result_stats.map { |file_result_stat| WcFile.new(@options, file_result_stat) }
   end
 end
