@@ -62,10 +62,10 @@ class FileStatsAnalyzer
     end
 
     file_result_stats << total_stats if @filenames.size > 1
-    file_result_stats = file_result_stats.map { |file_result_stat| create_result_text(file_result_stat) }
+    file_result_stats = file_result_stats.map { |file_result_stat| create_column_text(file_result_stat) }
   end
 
-  def create_result_text(file)
+  def create_column_text(file)
     text = ''
     text += file[:line_count].to_s.rjust(8) if @options[:l] || @options.empty?
     text += file[:word_count].to_s.rjust(8) if @options[:w] || @options.empty?
