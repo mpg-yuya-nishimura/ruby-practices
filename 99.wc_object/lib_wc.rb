@@ -1,6 +1,3 @@
-lib_wc
-
-
 # frozen_string_literal: true
 
 require 'optparse'
