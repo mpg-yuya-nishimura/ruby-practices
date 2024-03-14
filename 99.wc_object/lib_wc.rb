@@ -1,3 +1,6 @@
+lib_wc
+
+
 # frozen_string_literal: true
 
 require 'optparse'
@@ -18,8 +21,8 @@ class Wc
       return
     end
 
-    calc_file_stats_results.each do |file|
-      puts file.result_text
+    create_result_texts.each do |file_stat_text|
+      puts file_stat_text
     end
   end
 
@@ -37,32 +40,14 @@ class Wc
     @filenames.all? { |filename| File.exist?(filename) }
   end
 
-  def calc_file_stats_results
-    file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
-    total_stats = { line_count: 0, word_count: 0, byte_count: 0 }
-    file_result_stats = []
-
-    @argf.each do |line|
-      file_metadata[:line_count] += 1
-      file_metadata[:word_count] += line.split.size
-      file_metadata[:byte_count] += line.bytesize
-
-      total_stats[:line_count] += 1
-      total_stats[:word_count] += line.split.size
-      total_stats[:byte_count] += line.bytesize
-
-      next unless @argf.eof?
-
-      file_metadata[:name] = @argf.filename if @filenames.size.positive?
-      file_result_stats << file_metadata
-      file_metadata = { line_count: 0, word_count: 0, byte_count: 0, name: '' }
-
-      @argf.close
-
-      break if @argf.argv.empty?
+  def create_result_texts
+    calc_file_stats.map do |file_stat|
+      text = ''
+      text += file_stat.line_count.to_s.rjust(8) if @options[:l] || @options.empty?
+      text += file_stat.word_count.to_s.rjust(8) if @options[:w] || @options.empty?
+      text += file_stat.byte_count.to_s.rjust(8) if @options[:c] || @options.empty?
+      "#{text} #{file_stat.name}"
     end
-
-    file_result_stats << total_stats if @filenames.size > 1
-    file_result_stats.map { |file_result_stat| WcFile.new(@options, file_result_stat) }
   end
 end
+
