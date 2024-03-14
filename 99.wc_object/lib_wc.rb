@@ -47,14 +47,14 @@ class Wc
   end
 
   def calc_file_stats
-    file_stats = if @argv.empty?
+    stats = if @argv.empty?
                    [WcFile.new(text: $stdin.read)]
                  else
                    files = @argv.map { |filename| File.open(filename) }
                    files.map { |file| WcFile.new(text: file.read, filename: file.path) }
                  end
-    file_stats << calc_total_stats(files) if @filenames.size > 1
-    file_stats
+    stats << calc_total_stats(files) if @filenames.size > 1
+    stats
   end
 
   def calc_total_stats(files)
