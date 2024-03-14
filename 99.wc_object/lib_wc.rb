@@ -57,6 +57,17 @@ class Wc
                    files = @argv.map { |filename| File.open(filename) }
                    files.map { |file| WcFile.new(text: file.read, filename: file.path) }
                  end
+    file_stats << calc_total_stats(files) if @filenames.size > 1
+    file_stats
+  end
+
+  def calc_total_stats(files)
+    linked_text = files.map do |file|
+      file.rewind
+      file.read
+    end.join
+
+    WcFile.new(text: linked_text, filename: 'total')
   end
 end
 
