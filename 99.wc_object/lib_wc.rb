@@ -7,9 +7,8 @@ require 'optparse'
 require_relative 'wc_file'
 
 class Wc
-  def initialize(argv, argf)
+  def initialize(argv)
     @argv = argv
-    @argf = argf
     @options = {}
     extract_options
     @filenames = @argv.dup

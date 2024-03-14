@@ -4,4 +4,4 @@
 
 require_relative 'lib_wc'
 
-Wc.new(ARGV, ARGF).display
+Wc.new(ARGV).display
