@@ -5,10 +5,9 @@ require_relative 'wc_file'
 
 class Wc
   def initialize(argv)
-    @argv = argv
+    @filenames = argv
     @options = {}
     extract_options
-    @filenames = @argv.dup
   end
 
   def display
@@ -29,7 +28,7 @@ class Wc
     opt.on('-l') { |v| @options[:l] = v }
     opt.on('-w') { |v| @options[:w] = v }
     opt.on('-c') { |v| @options[:c] = v }
-    opt.parse!(@argv)
+    opt.parse!(@filenames)
   end
 
   def all_files_exist?
@@ -47,10 +46,10 @@ class Wc
   end
 
   def calc_text_stats
-    if @argv.empty?
+    if @filenames.empty?
       [WcFile.new(text: $stdin.read)]
     else
-      files = @argv.map { |filename| File.open(filename) }
+      files = @filenames.map { |filename| File.open(filename) }
       stats = calc_file_stats(files)
       stats << calc_total_stats(files) if files.size > 1
       stats
