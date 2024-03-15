@@ -37,7 +37,7 @@ class Wc
   end
 
   def create_result_texts
-    calc_file_stats.map do |file_stat|
+    calc_text_stats.map do |file_stat|
       text = ''
       text += file_stat.line_count.to_s.rjust(8) if @options[:l] || @options.empty?
       text += file_stat.word_count.to_s.rjust(8) if @options[:w] || @options.empty?
@@ -46,15 +46,19 @@ class Wc
     end
   end
 
-  def calc_file_stats
-    stats = if @argv.empty?
-              [WcFile.new(text: $stdin.read)]
-            else
-              files = @argv.map { |filename| File.open(filename) }
-              files.map { |file| WcFile.new(text: file.read, filename: file.path) }
-            end
-    stats << calc_total_stats(files) if @filenames.size > 1
-    stats
+  def calc_text_stats
+    if @argv.empty?
+      [WcFile.new(text: $stdin.read)]
+    else
+      files = @argv.map { |filename| File.open(filename) }
+      stats = calc_file_stats(files)
+      stats << calc_total_stats(files) if files.size > 1
+      stats
+    end
+  end
+
+  def calc_file_stats(files)
+    files.map { |file| WcFile.new(text: file.read, filename: file.path) }
   end
 
   def calc_total_stats(files)
