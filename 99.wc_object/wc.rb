@@ -26,7 +26,7 @@ class Wc
   end
 
   def create_result_texts
-    calc_text_stats.map do |file_stat|
+    determine_input_files.map do |file_stat|
       text = ''
       text += file_stat.line_count.to_s.rjust(8) if @options[:l] || @options.empty?
       text += file_stat.word_count.to_s.rjust(8) if @options[:w] || @options.empty?
@@ -35,7 +35,7 @@ class Wc
     end
   end
 
-  def calc_text_stats
+  def determine_input_files
     if @filenames.empty?
       [WcFile.new(text: $stdin.read)]
     else
