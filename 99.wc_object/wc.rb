@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
+require 'ostruct'
 require_relative 'wc_file'
 
 class Wc
@@ -41,7 +42,7 @@ class Wc
     else
       files = @filenames.map { |filename| File.open(filename) }
       wc_files = build_wc_files(files)
-      wc_files << build_total_wc_file(files) if files.size > 1
+      wc_files << build_total_wc_file(wc_files) if files.size > 1
       wc_files
     end
   end
@@ -50,12 +51,12 @@ class Wc
     files.map { |file| WcFile.new(text: file.read, filename: file.path) }
   end
 
-  def build_total_wc_file(files)
-    linked_text = files.map do |file|
-      file.rewind
-      file.read
-    end.join
-
-    WcFile.new(text: linked_text, filename: 'total')
+  def build_total_wc_file(wc_files)
+    OpenStruct.new({
+      line_count: wc_files.sum(&:line_count),
+      word_count: wc_files.sum(&:word_count),
+      byte_count: wc_files.sum(&:byte_count),
+      name: 'total'
+    })
   end
 end
