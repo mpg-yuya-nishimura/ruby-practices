@@ -11,11 +11,6 @@ class Wc
   end
 
   def display
-    unless all_files_exist?
-      puts '指定のファイルは存在しません'
-      return
-    end
-
     create_result_texts.each do |file_stat_text|
       puts file_stat_text
     end
@@ -29,10 +24,6 @@ class Wc
     opt.on('-w') { |v| @options[:w] = v }
     opt.on('-c') { |v| @options[:c] = v }
     opt.parse!(@filenames)
-  end
-
-  def all_files_exist?
-    @filenames.all? { |filename| File.exist?(filename) }
   end
 
   def create_result_texts
