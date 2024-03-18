@@ -40,9 +40,9 @@ class Wc
       [WcFile.new(text: $stdin.read)]
     else
       files = @filenames.map { |filename| File.open(filename) }
-      stats = build_wc_files(files)
-      stats << build_total_wc_file(files) if files.size > 1
-      stats
+      wc_files = build_wc_files(files)
+      wc_files << build_total_wc_file(files) if files.size > 1
+      wc_files
     end
   end
 
