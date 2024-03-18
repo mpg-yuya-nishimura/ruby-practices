@@ -15,14 +15,14 @@ class Wc
   private
 
   def extract_options(argv)
-    options, filenames = {}, []
+    options = {}
     opt = OptionParser.new
     opt.on('-l') { |v| options[:l] = v }
     opt.on('-w') { |v| options[:w] = v }
     opt.on('-c') { |v| options[:c] = v }
     filenames = opt.parse!(argv)
 
-    return options, filenames
+    [options, filenames]
   end
 
   def create_result_texts
