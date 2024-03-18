@@ -11,9 +11,7 @@ class Wc
   end
 
   def display
-    create_result_texts.each do |file_stat_text|
-      puts file_stat_text
-    end
+    puts create_result_texts
   end
 
   private
