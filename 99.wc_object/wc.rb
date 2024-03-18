@@ -41,7 +41,7 @@ class Wc
     else
       files = @filenames.map { |filename| File.open(filename) }
       stats = build_wc_files(files)
-      stats << calc_total_stats(files) if files.size > 1
+      stats << build_total_wc_file(files) if files.size > 1
       stats
     end
   end
@@ -50,7 +50,7 @@ class Wc
     files.map { |file| WcFile.new(text: file.read, filename: file.path) }
   end
 
-  def calc_total_stats(files)
+  def build_total_wc_file(files)
     linked_text = files.map do |file|
       file.rewind
       file.read
