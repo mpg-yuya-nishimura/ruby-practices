@@ -53,10 +53,10 @@ class Wc
 
   def build_total_wc_file(wc_files)
     OpenStruct.new({
-      line_count: wc_files.sum(&:line_count),
-      word_count: wc_files.sum(&:word_count),
-      byte_count: wc_files.sum(&:byte_count),
-      name: 'total'
-    })
+                     line_count: wc_files.sum(&:line_count),
+                     word_count: wc_files.sum(&:word_count),
+                     byte_count: wc_files.sum(&:byte_count),
+                     name: 'total'
+                   })
   end
 end
