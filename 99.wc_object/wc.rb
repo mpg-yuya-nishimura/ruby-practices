@@ -5,9 +5,7 @@ require_relative 'wc_file'
 
 class Wc
   def initialize(argv)
-    @filenames = argv
-    @options = {}
-    extract_options
+    @options, @filenames = extract_options(argv)
   end
 
   def display
@@ -16,12 +14,15 @@ class Wc
 
   private
 
-  def extract_options
+  def extract_options(argv)
+    options, filenames = {}, []
     opt = OptionParser.new
-    opt.on('-l') { |v| @options[:l] = v }
-    opt.on('-w') { |v| @options[:w] = v }
-    opt.on('-c') { |v| @options[:c] = v }
-    opt.parse!(@filenames)
+    opt.on('-l') { |v| options[:l] = v }
+    opt.on('-w') { |v| options[:w] = v }
+    opt.on('-c') { |v| options[:c] = v }
+    filenames = opt.parse!(argv)
+
+    return options, filenames
   end
 
   def create_result_texts
@@ -39,13 +40,13 @@ class Wc
       [WcFile.new(text: $stdin.read)]
     else
       files = @filenames.map { |filename| File.open(filename) }
-      stats = calc_file_stats(files)
+      stats = build_wc_files(files)
       stats << calc_total_stats(files) if files.size > 1
       stats
     end
   end
 
-  def calc_file_stats(files)
+  def build_wc_files(files)
     files.map { |file| WcFile.new(text: file.read, filename: file.path) }
   end
 
