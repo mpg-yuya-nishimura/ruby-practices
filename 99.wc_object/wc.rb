@@ -9,6 +9,14 @@ class Wc
   end
 
   def display
+    create_result_texts = determine_input_files.map do |file_stat|
+      text = ''
+      text += file_stat.line_count.to_s.rjust(8) if @options[:l] || @options.empty?
+      text += file_stat.word_count.to_s.rjust(8) if @options[:w] || @options.empty?
+      text += file_stat.byte_count.to_s.rjust(8) if @options[:c] || @options.empty?
+      "#{text} #{file_stat.name}"
+    end
+
     puts create_result_texts
   end
 
@@ -23,16 +31,6 @@ class Wc
     filenames = opt.parse!(argv)
 
     [options, filenames]
-  end
-
-  def create_result_texts
-    determine_input_files.map do |file_stat|
-      text = ''
-      text += file_stat.line_count.to_s.rjust(8) if @options[:l] || @options.empty?
-      text += file_stat.word_count.to_s.rjust(8) if @options[:w] || @options.empty?
-      text += file_stat.byte_count.to_s.rjust(8) if @options[:c] || @options.empty?
-      "#{text} #{file_stat.name}"
-    end
   end
 
   def determine_input_files
