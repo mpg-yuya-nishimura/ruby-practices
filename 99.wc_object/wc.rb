@@ -28,7 +28,7 @@ class Wc
     opt.on('-l') { |v| options[:l] = v }
     opt.on('-w') { |v| options[:w] = v }
     opt.on('-c') { |v| options[:c] = v }
-    filenames = opt.parse!(argv)
+    filenames = opt.parse(argv)
 
     [options, filenames]
   end
