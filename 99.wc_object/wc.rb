@@ -47,8 +47,8 @@ class Wc
   end
 
   def build_total_wc_file(wc_files)
-    total_wc_file = Data.define(:line_count, :word_count, :byte_count, :name)
-    total_wc_file.new(
+    total_wc_file_class = Data.define(:line_count, :word_count, :byte_count, :name)
+    total_wc_file_class.new(
       line_count: wc_files.sum(&:line_count),
       word_count: wc_files.sum(&:word_count),
       byte_count: wc_files.sum(&:byte_count),
