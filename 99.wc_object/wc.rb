@@ -9,7 +9,7 @@ class Wc
   end
 
   def display
-    determine_input_files.each do |file_stat|
+    fetch_wc_files.each do |file_stat|
       text = ''
       text += file_stat.line_count.to_s.rjust(8) if @options[:l] || @options.empty?
       text += file_stat.word_count.to_s.rjust(8) if @options[:w] || @options.empty?
@@ -31,7 +31,7 @@ class Wc
     [options, filenames]
   end
 
-  def determine_input_files
+  def fetch_wc_files
     if @filenames.empty?
       [WcFile.new(text: $stdin.read)]
     else
