@@ -9,12 +9,12 @@ class Wc
   end
 
   def display
-    fetch_wc_files.each do |file_stat|
+    fetch_wc_files.each do |wc_file|
       text = ''
-      text += file_stat.line_count.to_s.rjust(8) if @options[:l] || @options.empty?
-      text += file_stat.word_count.to_s.rjust(8) if @options[:w] || @options.empty?
-      text += file_stat.byte_count.to_s.rjust(8) if @options[:c] || @options.empty?
-      puts "#{text} #{file_stat.name}"
+      text += wc_file.line_count.to_s.rjust(8) if @options[:l] || @options.empty?
+      text += wc_file.word_count.to_s.rjust(8) if @options[:w] || @options.empty?
+      text += wc_file.byte_count.to_s.rjust(8) if @options[:c] || @options.empty?
+      puts "#{text} #{wc_file.name}"
     end
   end
 
