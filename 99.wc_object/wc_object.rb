@@ -2,6 +2,6 @@
 
 # frozen_string_literal: true
 
-require_relative 'wc'
+require_relative './file_stat'
 
-Wc.new(ARGV).display
+FileStat.new(ARGV).display
