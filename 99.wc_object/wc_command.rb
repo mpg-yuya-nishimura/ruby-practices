@@ -4,4 +4,4 @@
 
 require_relative './file_stat'
 
-FileStat.new(ARGV).display
+FileStat.display(ARGV)

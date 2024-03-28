@@ -4,6 +4,10 @@ require 'optparse'
 require_relative './wc'
 
 class FileStat
+  def self.display(argv)
+    new(argv).display
+  end
+
   def initialize(argv)
     @options, @filenames = extract_options(argv)
   end
