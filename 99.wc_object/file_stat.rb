@@ -37,7 +37,7 @@ class FileStat
 
   def fetch_wc_files
     if @filenames.empty?
-      [Wc.new(text: $stdin.read)]
+      [Wc.new($stdin.read)]
     else
       files = @filenames.map { |filename| File.open(filename) }
       wc_files = build_wc_files(files)
