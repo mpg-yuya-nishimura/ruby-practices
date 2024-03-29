@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Wc
+class TextStatic
   attr_reader :line_count, :word_count, :byte_count, :name
 
   def initialize(text, filename = '')

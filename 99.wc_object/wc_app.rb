@@ -3,7 +3,7 @@
 require 'optparse'
 require_relative './text_static'
 
-class FileStat
+class WcApp
   def self.display(argv)
     new(argv).display
   end
@@ -37,11 +37,11 @@ class FileStat
 
   def fetch_wc_files
     if @filenames.empty?
-      [Wc.new($stdin.read)]
+      [TextStatic.new($stdin.read)]
     else
       wc_files = @filenames.map do |filename|
         file = File.open(filename)
-        Wc.new(file.read, file.path)
+        TextStatic.new(file.read, file.path)
       end
       wc_files << build_total_wc_file(wc_files) if wc_files.size > 1
       wc_files

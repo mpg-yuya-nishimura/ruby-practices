@@ -4,4 +4,4 @@
 
 require_relative './wc_app'
 
-FileStat.display(ARGV)
+WcApp.display(ARGV)
