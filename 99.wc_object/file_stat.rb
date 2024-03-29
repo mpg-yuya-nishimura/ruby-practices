@@ -39,15 +39,13 @@ class FileStat
     if @filenames.empty?
       [Wc.new($stdin.read)]
     else
-      files = @filenames.map { |filename| File.open(filename) }
-      wc_files = build_wc_files(files)
-      wc_files << build_total_wc_file(wc_files) if files.size > 1
+      wc_files = @filenames.map do |filename|
+        file = File.open(filename)
+        Wc.new(file.read, file.path)
+      end
+      wc_files << build_total_wc_file(wc_files) if wc_files.size > 1
       wc_files
     end
-  end
-
-  def build_wc_files(files)
-    files.map { |file| Wc.new(file.read, file.path) }
   end
 
   def build_total_wc_file(wc_files)
