@@ -47,7 +47,7 @@ class FileStat
   end
 
   def build_wc_files(files)
-    files.map { |file| Wc.new(text: file.read, filename: file.path) }
+    files.map { |file| Wc.new(file.read, file.path) }
   end
 
   def build_total_wc_file(wc_files)
