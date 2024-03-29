@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require_relative './wc'
+require_relative './text_static'
 
 class FileStat
   def self.display(argv)
