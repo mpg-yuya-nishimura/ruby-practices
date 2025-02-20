@@ -57,4 +57,8 @@ class FileSystem
     filenames.map! { |items| items.values_at(0...max_size) }
     filenames.transpose
   end
+
+  def efeffee
+    puts "rgrg"
+  end
 end
